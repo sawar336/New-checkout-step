@@ -10,7 +10,6 @@ define([
              * @param {jQuery} form
              */
             ajaxSubmit: function (form) {
-                debugger;
                 var self = this,
                     productIds = idsResolver(form),
                     productInfo = self.options.productInfoResolver(form),
