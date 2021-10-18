@@ -1,0 +1,82 @@
+<li id="products_step" data-bind="fadeVisible: isVisible">
+    <div class="step-title" translate="'Also you can buy'" data-role="title"></div>
+    <div id="checkout-step-title"
+         class="step-content"
+         data-role="content">
+
+        <if args="$data.products">
+            <div class="page-products">
+                <div class="products wrapper grid products-grid">
+                    <ol class="products list items product-items">
+                        <each args="$data.products">
+                            <li class="item product product-item">
+                                <div class="product-item-info"
+                                     data-bind="attr: {id: 'product-item-info_' + id}"
+                                     data-container="product-grid">
+                                    <a data-bind="attr: {href: url}" class="product photo product-item-photo" tabindex="-1">
+                                    <span class="product-image-wrapper" style="padding-bottom: 125%;">
+                                        <img data-bind="attr: {src: image}" class="product-image-photo"/>
+                                    </span>
+                                    </a>
+                                    <div class="product details product-item-details">
+                                        <strong class="product name product-item-name">
+                                            <a class="product-item-link" data-bind="attr: {href: url}" text="name"></a>
+                                        </strong>
+                                        <div html="formattedPrice" afterRender="$parent.initPriceBox($data)"></div>
+                                        <if args="$data['swatches']">
+                                            <div class="swatch-opt-<?= $block->escapeHtmlAttr($productId) ?>"
+                                                 data-role="swatch-option-<?= $block->escapeHtmlAttr($productId) ?>"
+                                                 data-bind='mageInit: {
+                                                    "Magento_Swatches/js/swatch-renderer": {
+                                                        "selectorProduct": ".product-item-details",
+                                                        "onlySwatches": true,
+                                                        "enableControlLabel": false,
+                                                        "numberToShow": swatches.numberToShow,
+                                                        "jsonConfig": swatches.jsonConfig,
+                                                        "jsonSwatchConfig": swatches.jsonSwatchConfig,
+                                                        "mediaCallback": swatches.mediaCallback,
+                                                        "jsonSwatchImageSizeConfig": swatches.jsonSwatchImageSizeConfig,
+                                                        "showTooltip": swatches.showTooltip
+                                                    }
+                                                }'
+                                            ></div>
+                                        </if>
+                                        <div class="product-item-inner">
+                                            <div class="product actions product-item-actions">
+                                                <div class="actions-primary">
+                                                    <form data-role="tocart-form"
+                                                          data-product-sku="sku"
+                                                          data-method="post"
+                                                          data-bind="attr: {action: addToUrl}">
+                                                        <input type="hidden" name="product" data-bind="attr: {value: id}">
+                                                        <input type="hidden" name="uenc" data-bind="attr: {value: addToUrl}">
+                                                        <input type="hidden" name="form_key" data-bind="attr: {value: formKey}">
+                                                        <button type="submit"
+                                                                title="add-to-cart"
+                                                                class="action tocart primary" afterrender="$parent.initProductValidation">
+                                                            <span translate="'Add to Cart'"></span>
+                                                        </button>
+                                                    </form>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </li>
+                        </each>
+                    </ol>
+                </div>
+            </div>
+        </if>
+
+        <form data-bind="submit: navigateToNextStep" novalidate="novalidate">
+            <div class="actions-toolbar">
+                <div class="primary">
+                    <button data-role="opc-continue" type="submit" class="button action continue primary">
+                        <span translate="'Next'"></span>
+                    </button>
+                </div>
+            </div>
+        </form>
+    </div>
+</li>
